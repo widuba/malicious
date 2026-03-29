@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sorry</title>
+  <style>
+    body {
+      background: red;
+      color: white;
+      text-align: center;
+      font-family: Arial;
+      margin-top: 100px;
+    }
+    #count {
+      font-size: 50px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>You didn't answer my question.</h1>
+<input type="file" id="fileInput">
+<div id="count">5</div>
+
+<script>
+  let count = 5;
+  const el = document.getElementById("count");
+  const fileInput = document.getElementById("fileInput");
+
+  const interval = setInterval(() => {
+    count--;
+    el.textContent = count;
+
+    if (count === 0) {
+      clearInterval(interval);
+
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const url = URL.createObjectURL(file);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "malicious.txt";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  }, 1000);
+</script>
+
+</body>
+</html>
